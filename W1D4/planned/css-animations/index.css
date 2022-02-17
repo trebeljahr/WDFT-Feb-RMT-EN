@@ -1,0 +1,159 @@
+.container {
+    margin-bottom: 50px;
+}
+.container > div {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: coral;
+  margin: 10px;
+}
+
+.color {
+  transition: background 1s;
+}
+
+.color:hover {
+  background: blue;
+}
+
+.fade-out {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s linear;
+}
+
+.fade-out:hover {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear;
+}
+
+.rotate {
+  transition: transform 1s linear;
+}
+
+.rotate:hover {
+  transform: rotate(360deg);
+}
+
+.enlarge {
+  transition: transform 1s;
+}
+
+.enlarge:hover {
+  transform: scale(1.2);
+}
+
+.yes {
+  transition: all 1s;
+}
+.yes:hover {
+  transform: scale(1.2) rotate(720deg);
+  background: blue;
+  border: 10px solid yellow;
+}
+
+.animate-rotation {
+  animation: spin 4s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-size {
+  animation: size 0.5s infinite;
+}
+
+@keyframes size {
+  from {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-position {
+  animation: move 1s infinite linear;
+}
+
+.animate-position-different {
+  animation: move 1s infinite;
+}
+
+@keyframes move {
+  from {
+    transform: translateX(0%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.animate-color {
+  animation: color 4s infinite linear;
+}
+
+@keyframes color {
+  0% {
+    background: coral;
+  }
+
+  10% {
+    color: white;
+  }
+  25% {
+    background: darkblue;
+    color: white;
+  }
+  40% {
+    color: black;
+  }
+  50% {
+    background: yellow;
+  }
+
+  75% {
+    background: red;
+  }
+
+  100% {
+    background: coral;
+  }
+}
+
+.wtf {
+  animation: color 4s infinite linear, move-and-spin-and-grow 2s infinite;
+}
+
+@keyframes move-and-spin-and-grow {
+  from {
+    transform: translateX(0%) rotateZ(0deg) rotateY(0deg) scale(1.0);
+  }
+
+  50% {
+    transform: translateX(200%) rotateZ(360deg) rotateY(360deg) scale(1.5);
+  }
+  to {
+    transform: translateX(0%) rotateZ(0deg) rotateY(0deg)  scale(1.0);
+  }
+}
