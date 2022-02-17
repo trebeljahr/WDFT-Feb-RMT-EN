@@ -94,3 +94,26 @@ console.log(schools);
 
 const mixedArray = [1, "hello", undefined];
 console.log(mixedArray.map(multBy2));
+
+// activity - last "iteration"
+const info = {
+  cities: [
+    { name: "Mirazur", owner: "Gustavo" },
+    { name: "Noma", owner: "Jorge" },
+    { name: "Gaggan", owner: "Alvaro" },
+    { name: "Geranium", owner: "Gustavo" },
+    { name: "Arpège", owner: "Luis" },
+  ],
+};
+
+const myRestaurants = (arr) => {
+  //your code here
+  return arr.map((restaurant) => restaurant.name);
+};
+
+//
+// let restaurants = myRestaurants(info.cities);
+let restaurants = info.cities.map((restaurant) => restaurant.name);
+console.log(
+  restaurants
+); /*Answer should be [ 'Mirazur', 'Noma', 'Gaggan', 'Geranium', 'Arpège']*/
