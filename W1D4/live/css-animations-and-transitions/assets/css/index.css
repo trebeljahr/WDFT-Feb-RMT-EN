@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  background-color: coral;
+}
+
+/* easing-function as third parameter for the transition
+   options like linear
+*/
+#make-larger {
+  transition: width 2s, height 2s;
+}
+
+#make-larger:hover {
+  width: 200px;
+  height: 200px;
+}
+
+#change-color {
+  transition: background-color 0.5s, color 0.5s;
+}
+
+#change-color:hover {
+  background-color: blue;
+  color: white;
+}
+
+#rotate {
+  transition: transform 2s;
+}
+
+#rotate:hover {
+  transform: rotate(45deg);
+}
+
+#scales {
+  transition: transform 1s;
+}
+
+#scales > p {
+  text-align: center;
+}
+
+#scales:hover {
+  transform: scale(1.5);
+}
+
+#flipping {
+  transition: transform 1s;
+}
+
+#flipping:hover {
+  transform: rotateY(180deg);
+}
+
+#animation-make-larger {
+    /* name of keyframe animation, time it takes, easing function, and repeating count (infinite is an option)*/
+  animation: grow 4s linear infinite;
+}
+
+@keyframes grow {
+  0% {
+    width: 100px;
+    height: 100px;
+  }
+  50% {
+    width: 200px;
+    height: 200px;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+  }
+  /* from {
+    width: 100px;
+    height: 100px;
+  }
+  to {
+    width: 200px;
+    height: 200px;
+  } */
+}
+
+#animation-rotate {
+    animation: rotation 2s infinite;
+}
+
+@keyframes rotation {
+    0% { 
+        transform: rotate(0deg);
+    }
+    50% { 
+        transform: rotate(360deg);
+        
+    }
+    100% { 
+        transform: rotate(0deg);
+    
+    }
+}
