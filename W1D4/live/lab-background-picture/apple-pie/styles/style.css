@@ -1,0 +1,30 @@
+body {
+    overflow-x: hidden;
+    margin: 0;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.flex-container {
+    position: relative;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+/* .background-image-on-div {
+    background-image: url("/images/apple-pie.jpg");
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+
+} */
