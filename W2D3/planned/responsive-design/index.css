@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-size: 1vw;
+}
+.color {
+    margin: 10px;
+    background: coral;
+    width: 80vw;
+    height: 30vw;
+}
+h1 {
+    margin: 10px;
+    font-size: 10em;
+}
+
+p {
+    margin: 10px;
+    font-size: 6em;
+
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.box {
+    background-color: aqua;
+    margin: 10px;
+    width: 80vw;
+    height: 100px;
+}
+
+.squareContainer {
+    margin-top: 30px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.alwaysSquare {
+    background: orange;
+    /* there is also vmin which does the same :)*/
+    /* 
+    width: 90vmin;
+    height: 90vmin;
+    */
+    width: min(90vw, 90vh);
+    height: min(90vw, 90vh);
+}
+
+@media screen and (min-width: 600px) {
+    .color {
+        background: blue;
+    }
+    
+}
+@media screen and (min-width: 768px) {
+    .flexContainer {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    .box {
+        width: 30vw;
+    }
+    .color {
+        margin: 10px auto;
+        width: 100vw;
+    }
+    h1 {
+        text-align: center;
+        font-size: 5em;
+    }
+    p {
+        text-align: center;
+        font-size: 3em;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .color {
+        background: yellow;
+    }
+}
+
+/* we can change CSS also based on the orientation of the screen */
+@media screen and (orientation: portrait) {
+    body {
+      background-color: lightblue;
+    }
+}
+
+/* some typical device breakpoints */
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
