@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    font-size: 1vw;
+}
+
+h1, h2, p {
+    margin: 10px;
+}
+
+h1 {
+    font-size: 5em;
+}
+
+p {
+    font-size: 3em;
+}
+
+.box {
+    width: 25vw;
+    height: 10vh;
+    background-color: aqua;
+    margin: 10px;
+}
+
+.minWidthExample {
+    margin: 10px;
+    min-width: 100px;
+    min-height: 100px;
+    width: fit-content;
+    /* max-width: 400px; */
+    background: yellow;
+}
+
+.square {
+    width: 90vmin;
+    height: 90vmin;
+    background: green;   
+}
+
+.squareContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 760px) {
+    .box {
+        background-color: red;
+        width: 50vw;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    h1 {
+        font-size: 10em;
+    }
+    
+    p {
+        font-size: 6em;
+    }
+}
+
+
+@media (orientation: portrait /* landscape*/ ) {
+    body {
+        background: lightblue
+    }
+    /* wouldn't work, we need select some kind of element */
+    /* background: lightblue;  */
+}
+
+/* some typical device breakpoints */
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
