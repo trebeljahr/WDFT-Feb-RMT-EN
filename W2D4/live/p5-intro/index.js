@@ -5,12 +5,11 @@
 // what is draw
 
 let img;
+let player;
 let obstacle;
 let obstacle2;
-let y = 0;
-let x = 30;
-const marioWidth = 55;
-const marioHeight = 55;
+let obstacles = [];
+let improvedPlayer;
 const SPACE = 32;
 
 function preload() {
@@ -18,68 +17,78 @@ function preload() {
 }
 
 function setup() {
-  obstacle = new Obstacle(200, 400 - 30, 80, 30);
-  obstacle2 = new Obstacle(100, 400 - 30, 50, 30);
+  obstacles.push(new Obstacle(200, 400 - 30, 80, 30));
+  obstacles.push(new Obstacle(100, 400 - 30, 50, 30));
+  player = new Player(0, 0, 55, 55);
+  improvedPlayer = new ImprovedPlayer();
+
+  //   console.log(
+  //     "Is obstacle an instance of Obstacle class?",
+  //     obstacle instanceof Obstacle
+  //   );
+  //   console.log(
+  //     "Is obstacle an instance of Rectangle class?",
+  //     obstacle instanceof Rectangle
+  //   );
+
   createCanvas(400, 400);
   frameRate(60);
 }
 
-function marioCollidesWithObstacle() {
-  const leftOfMario = x;
-  const rightOfMario = x + marioWidth;
-  const topOfMario = y;
-  const bottomOfMario = y + marioHeight;
+function rectangleCollision(rect1, rect2) {
+  if (rect1 instanceof Rectangle && rect2 instanceof Rectangle) {
+    const leftOfRect1 = rect1.x;
+    const rightOfRect1 = rect1.x + rect1.width;
+    const topOfRect1 = rect1.y;
+    const bottomOfRect1 = rect1.y + rect1.height;
 
-  const leftOfObstacle = obstacle.x;
-  const rightOfObstacle = obstacle.x + obstacle.width;
-  const topOfObstacle = obstacle.y;
-  const bottomOfObstacle = obstacle.y + obstacle.height;
+    const leftOfRect2 = rect2.x;
+    const rightOfRect2 = rect2.x + rect2.width;
+    const topOfRect2 = rect2.y;
+    const bottomOfRect2 = rect2.y + rect2.height;
 
-  const collidingInXDirection =
-    rightOfMario > leftOfObstacle && rightOfObstacle > leftOfMario;
+    const collidingInXDirection =
+      rightOfRect1 > leftOfRect2 && rightOfRect2 > leftOfRect1;
 
-  const collidingInYDirection =
-    bottomOfMario > topOfObstacle && bottomOfObstacle > topOfMario;
+    const collidingInYDirection =
+      bottomOfRect1 > topOfRect2 && bottomOfRect2 > topOfRect1;
 
-  return collidingInXDirection && collidingInYDirection;
+    return collidingInXDirection && collidingInYDirection;
+  }
+  console.log("Those are not rectangles");
+}
+
+function isMarioCollidingWithAnyObject() {
+  const obstaclesWeWouldCollideWith = obstacles.filter((obstacle) => {
+    return rectangleCollision(player, obstacle);
+  });
+  //   console.log(obstaclesWeWouldCollideWith);
+  return obstaclesWeWouldCollideWith.length >= 1;
 }
 
 function keyPressed() {
-  //   console.log(keyCode);
-  //   console.log(LEFT_ARROW);
-  if (keyCode === LEFT_ARROW) {
-    x -= 10;
-    if (marioCollidesWithObstacle()) {
-      x += 10;
-    }
-  } else if (keyCode === RIGHT_ARROW) {
-    x += 10;
-    if (marioCollidesWithObstacle()) {
-      x -= 10;
-    }
-  } else if (keyCode === UP_ARROW || keyCode === SPACE) {
-    console.log(onGround());
-    y += 10;
-    if (onGround()) {
-      y -= 200;
-      y -= 10;
-    }
-  }
-}
-
-function onGround() {
-  //   const bottomOfMario = y + marioHeight;
-  //   const topOfObstacle = obstacle.y;
-  //   const obstacleY2 = obstacle.y + obstacle.height;
-  //   const collidingInYDirection = bottomOfMario > topOfObstacle && obstacleY2 > y;
-  //   if (collidingInYDirection) {
-  //     return true;
+  //   if (keyCode === LEFT_ARROW) {
+  //     player.moveX(-10);
+  //     if (isMarioCollidingWithAnyObject()) {
+  //       player.moveX(10);
+  //     }
+  //   } else if (keyCode === RIGHT_ARROW) {
+  //     player.moveX(10);
+  //     if (isMarioCollidingWithAnyObject()) {
+  //       player.moveX(-10);
+  //     }
+  //   } else if (keyCode === UP_ARROW || keyCode === SPACE) {
+  //     console.log("Jumping");
+  //     console.log(player.onGround());
+  //     console.log(player.y);
+  //     console.log(400 - 55);
+  //     if (player.onGround()) {
+  //       player.moveY(-200);
+  //     }
   //   }
-
-  return y > 400 - 54 + 10;
 }
 
-class Obstacle {
+class Rectangle {
   constructor(x, y, width, height) {
     this.height = height;
     this.width = width;
@@ -94,28 +103,99 @@ class Obstacle {
   }
 }
 
+class Obstacle extends Rectangle {
+  constructor(x, y, width, height) {
+    super(x, y, width, height);
+  }
+}
+
+class Player extends Rectangle {
+  constructor(x, y, width, height) {
+    super(x, y, width, height);
+  }
+  draw() {
+    image(img, this.x, this.y, this.width, this.height);
+  }
+  onGround() {
+    const feetOfPlayer = this.y + this.height;
+    return feetOfPlayer >= 400;
+  }
+  moveX(number) {
+    this.x += number;
+  }
+  moveY(number) {
+    this.y += number;
+  }
+}
+
+class ImprovedPlayer {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.velX = 0;
+    this.velY = 0;
+  }
+
+  draw() {
+    if (keyIsDown(LEFT_ARROW)) {
+      this.velX -= 0.1;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      this.velX += 0.1;
+    }
+    if (keyIsDown(UP_ARROW)) {
+      this.velY -= 0.1;
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+      this.velY += 0.1;
+    }
+
+    if (this.velX > 0) {
+      this.velX -= 0.05;
+    } else if (this.velX < 0) {
+      this.velX += 0.05;
+    }
+
+    if (this.velY > 0) {
+      this.velY -= 0.05;
+    } else if (this.velY < 0) {
+      this.velY += 0.05;
+    }
+
+    console.log(this.velX.toFixed(2));
+
+    this.x += this.velX;
+    this.y += this.velY;
+
+    let yellow = color(255, 204, 0);
+    fill(yellow);
+    rect(this.x, this.y, 30, 30);
+  }
+}
+
 function draw() {
+  background(220);
+  improvedPlayer.draw();
   //   console.log(keyCode);
   //   noLoop();
   //   console.log(frameCount);
   //   console.log("Drawing...");
-  background(220);
   //   let yellow = color(255, 204, 0);
   //   fill(yellow);
   // stroke(c);
   //   rect(x, y, 55, 55);
-  image(img, x, y, marioWidth, marioHeight);
-  obstacle.draw();
-  obstacle2.draw();
-  y += 10;
-  console.log("onGround", onGround());
-  console.log("collidingWithObstacle", marioCollidesWithObstacle());
-  if (onGround() || marioCollidesWithObstacle()) {
-    y -= 10;
-  }
-  let green = color(30, 200, 30);
-  fill(green);
-  triangle(30, 75, 58, 20, 86, 75);
+  //   obstacles.forEach((o) => o.draw());
+  //   player.draw();
+  //   console.log("onGround", onGround());
+  //   console.log("collidingWithObstacle", marioCollidesWithObstacle());
+
+  //   player.moveY(10);
+  //   if (player.onGround() || isMarioCollidingWithAnyObject()) {
+  //     player.moveY(-10);
+  //   }
+  //   let green = color(30, 200, 30);
+  //   fill(green);
+  //   triangle(30, 75, 58, 20, 86, 75);
 
   //   beginShape(TESS);
   //   vertex(20 + mouseX, 20 + mouseY);
@@ -151,7 +231,7 @@ function draw() {
 
 // how to draw an image
 
-// how to make things move around in a "nice" way
+// how to make things move around in a "nicer" way
 
 // sounds/music
 
