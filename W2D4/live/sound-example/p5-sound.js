@@ -1,3 +1,6 @@
+
+// this whole file is just a giant copy from GITHUB!
+
 /** [p5.sound]  Version: 1.0.1 - 2021-06-11 */ 
  /**
  *  <p>p5.sound extends p5 with <a href="http://caniuse.com/audio-api"

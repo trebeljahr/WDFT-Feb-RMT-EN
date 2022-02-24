@@ -5,6 +5,7 @@ let state = 0; // mousePress will increment from Record, to Stop, to Play
 let chronometer = new Chronometer();
 
 function setup() {
+  // sounds/music
   createCanvas(400, 400);
   background(200);
   fill(0);
