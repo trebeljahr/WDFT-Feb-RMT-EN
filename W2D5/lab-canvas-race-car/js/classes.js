@@ -1,4 +1,5 @@
 class Rectangle {
+  // basic rectangle class to re-use some code...
   constructor(x, y, w, h) {
     this.x = x;
     this.y = y;
@@ -17,6 +18,8 @@ class Obstacles {
   }
 
   addObstacle() {
+    // generate a random obstacle with randomX coordinate on the road and a random width
+    // between 60, 120 and then add that to the array of obstacles
     const sideLaneSize = width / 12;
     const randomWidth = random(60, 120);
     const randomX = random(sideLaneSize, width - randomWidth - sideLaneSize);
@@ -31,8 +34,10 @@ class Obstacles {
     this.array.forEach((obstacle, index) => {
       obstacle.y += 5;
       if (obstacle.y - obstacle.h >= height) {
+        // add to the score and delete the obstacle from the array
         this.score++;
         this.array.splice(index, 1);
+        // also add back a new one at the top
         this.addObstacle();
       }
       fill("red");
@@ -64,6 +69,7 @@ class Car extends Rectangle {
   }
 
   move() {
+    // when user presses keys, accelerate in given direction
     if (keyIsDown(LEFT_ARROW)) {
       this.speedX -= this.acceleration;
     }
@@ -77,12 +83,17 @@ class Car extends Rectangle {
       this.speedY += this.acceleration;
     }
 
+    // simulate something like "air drag"
     this.speedX = decayVelocity(this.speedX);
     this.speedY = decayVelocity(this.speedY);
 
     this.x += this.speedX;
     this.y += this.speedY;
 
+    // stop the car from getting out of the road, also set the speed in that direction to 0
+    // so that we can't speed up into that direction and kind of "stick" into the wall
+    // because we have to get rid of that leftover velocity before starting to move
+    // in the other direction again
     const sideLaneSize = width / 12;
     const leftEdgeOfTheRoad = sideLaneSize;
     if (this.x < leftEdgeOfTheRoad) {
@@ -107,11 +118,17 @@ class Car extends Rectangle {
     }
   }
   collidesWith(obstacles) {
+    // check the array of obstacles, for one that collides, since
+    // .find returns either undefined or the found element, we need to do a
+    // boolean conversion -> !! does that.
     return !!obstacles.array.find((obstacle) => collision(obstacle, this));
   }
 }
 
 function collision(rect1, rect2) {
+  // this code is literally copy - pasted from MDN
+  // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+  // it's the idea of an AABB - axis aligned bounding box collision for non-rotated rectangles
   return (
     rect1.x < rect2.x + rect2.w &&
     rect1.x + rect1.w > rect2.x &&
@@ -124,10 +141,21 @@ function decayVelocity(vel) {
   // implement decaying velocities
   const decay = vel > 0 ? -0.05 : vel < 0 ? 0.05 : 0;
   vel += decay;
+  // we have to clamp down the value to 0 manually because of the way floating point
+  // arithmetic works in JS.
+  // because in JS (1 - 0.05) !== 0.95 ... but more like 0.950000000000004
+  // so to not constantly bounce the velocity between two values that are very close, but not equal
+  // to zero we look from which way we approach it and then "clamp" the value
+  // to 0 if we overshoot it slightly
+  // doing so 0.00000000004 turns into 0 and -0.000000000004 also turns into 0
   const overshootFromTop = vel < 0 && decay < 0;
   const overshootFromBot = vel > 0 && decay > 0;
   if (overshootFromTop || overshootFromBot) {
     return 0;
   }
+  // instead of doing the above we could also clamp 0 down by using Number.Epsilon
+  // comparison, like in the line commented out below
+  // vel = Math.abs(vel - 0) < Number.Epsilon ? 0 : vel;
+  // more on why this is that way: https://www.matthewburfield.com/javascript-deep-dive-floating-point-numbers/
   return vel;
 }

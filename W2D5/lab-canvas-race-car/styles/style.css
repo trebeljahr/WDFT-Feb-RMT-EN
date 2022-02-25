@@ -1,3 +1,4 @@
+/* basic style normalization, no x direction scroll, no stupid margins/paddings etc. */
 body {
   padding: 0;
   text-align: center;
@@ -33,6 +34,7 @@ body button {
   margin-bottom: 20px;
 }
 
+/* give the containers nice flexbox styles */
 #game-board, .game-over, .game-intro {
   width: 100vw;
   height: 100vh;
@@ -41,8 +43,10 @@ body button {
   flex-direction: column;
 }
 
+/* initially set both game-board and game-over screen to hidden */
+/* we'll eventually toggle those from JS on or off */
 #game-board {
-    display: none;
+  display: none;
 }
 
 .game-over {
