@@ -28,13 +28,17 @@ function draw() {
 
 function toggleGameOver() {
   noLoop();
-  car = new Car(img);
-  obstacles = new Obstacles();
 
   const gameOverElement = document.querySelector(".game-over");
   gameOverElement.style.display = "flex";
   const gameBoardElement = document.getElementById("game-board");
   gameBoardElement.style.display = "none";
+  const scoreElement = document.querySelector(".game-over span");
+  scoreElement.innerText = obstacles.score;
+
+  // reset the game state to start from fresh
+  car = new Car(img);
+  obstacles = new Obstacles();
 }
 
 window.onload = () => {
