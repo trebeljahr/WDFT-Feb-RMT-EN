@@ -1,0 +1,50 @@
+body {
+  padding: 0;
+  text-align: center;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.game-intro {
+  display: flex;
+}
+
+.game-intro p {
+  font-size: 18px;
+  font-family: "Verdana"
+}
+
+.logo-img {
+  width: 350px;
+}
+
+.arrows-img {
+  width: 150px;
+}
+
+body button {
+  font-size: 30px;
+  background-color: #870007;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#game-board, .game-over, .game-intro {
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#game-board {
+    display: none;
+}
+
+.game-over {
+  display: none;
+}

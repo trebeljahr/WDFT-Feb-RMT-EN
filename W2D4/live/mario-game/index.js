@@ -1,13 +1,5 @@
-// how to reference JS file from index.html
-
-// what is setup
-
-// what is draw
-
 let img;
 let player;
-let obstacle;
-let obstacle2;
 let obstacles = [];
 let improvedPlayer;
 const SPACE = 32;
@@ -19,21 +11,30 @@ function preload() {
 
 function setup() {
   obstacles.push(new Obstacle(200, 400 - 30, 80, 30));
-  obstacles.push(new Obstacle(100, 400 - 30, 50, 30));
+  // obstacles.push(new Obstacle(100, 400 - 30, 50, 30));
   player = new Player(0, 0, 55, 55);
 
   console.log(
     "Is obstacle an instance of Obstacle class?",
-    obstacle instanceof Obstacle
+    obstacles[0] instanceof Obstacle
   );
   console.log(
     "Is obstacle an instance of Rectangle class?",
-    obstacle instanceof Rectangle
+    obstacles[0] instanceof Rectangle
   );
 
   createCanvas(400, 400);
 }
 
+function collidingInXDir(rect1, rect2) {
+  const leftOfRect1 = rect1.x;
+  const rightOfRect1 = rect1.x + rect1.width;
+  const topOfRect1 = rect1.y;
+  const bottomOfRect1 = rect1.y + rect1.height;
+  const collidingInXDirection =
+    rightOfRect1 > leftOfRect2 && rightOfRect2 > leftOfRect1;
+  return collidingInXDirection;
+}
 function rectangleCollision(rect1, rect2) {
   // simple collision detections -> AABB for 2 rects without rotation
   if (rect1 instanceof Rectangle && rect2 instanceof Rectangle) {
@@ -53,6 +54,8 @@ function rectangleCollision(rect1, rect2) {
     const collidingInYDirection =
       bottomOfRect1 > topOfRect2 && bottomOfRect2 > topOfRect1;
 
+    console.log("X Collision?", collidingInXDirection);
+    console.log("Y Collision?", collidingInYDirection);
     return collidingInXDirection && collidingInYDirection;
   }
   console.log("Those are not rectangles");
@@ -63,28 +66,6 @@ function isMarioCollidingWithAnyObject() {
     return rectangleCollision(player, obstacle);
   });
   return obstaclesWeWouldCollideWith.length >= 1;
-}
-
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    player.moveX(-10);
-    if (isMarioCollidingWithAnyObject()) {
-      player.moveX(10);
-    }
-  } else if (keyCode === RIGHT_ARROW) {
-    player.moveX(10);
-    if (isMarioCollidingWithAnyObject()) {
-      player.moveX(-10);
-    }
-  } else if (keyCode === UP_ARROW || keyCode === SPACE) {
-    console.log("Jumping");
-    console.log(player.onGround());
-    console.log(player.y);
-    console.log(400 - 55);
-    if (player.onGround()) {
-      player.moveY(-200);
-    }
-  }
 }
 
 class Rectangle {
@@ -111,6 +92,8 @@ class Obstacle extends Rectangle {
 class Player extends Rectangle {
   constructor(x, y, width, height) {
     super(x, y, width, height);
+    this.velX = 0;
+    this.velY = 0;
   }
   draw() {
     // how to draw an image
@@ -121,25 +104,56 @@ class Player extends Rectangle {
     const feetOfPlayer = this.y + this.height;
     return feetOfPlayer >= 400;
   }
-  moveX(number) {
-    this.x += number;
+  move() {
+    if (keyIsDown(LEFT_ARROW)) {
+      this.velX -= 0.1;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      this.velX += 0.1;
+    }
+
+    this.velX = min(this.velX, 10);
+    this.velX = max(this.velX, -10);
+
+    if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)) {
+      this.velX = decayVelocity(this.velX);
+    }
+
+    this.x += this.velX;
+    this.y += this.velY;
+    this.velY += 0.5;
+    this.y += this.velY;
+
+    if (isMarioCollidingWithAnyObject()) {
+      this.x -= this.velX;
+      this.y -= this.velY;
+    }
+
+    this.y = min(this.y, height - this.height - 1);
   }
-  moveY(number) {
-    this.y += number;
+}
+
+function keyPressed() {
+  if (keyCode === SPACE) {
+    player.velY = -8;
   }
+}
+
+function decayVelocity(vel) {
+  // implement decaying velocities
+  const decay = vel > 0 ? -vel / 10 : vel < 0 ? vel / 10 : 0;
+  vel += decay;
+  const overshootFromTop = vel < 0 && decay < 0;
+  const overshootFromBot = vel > 0 && decay > 0;
+  if (overshootFromTop || overshootFromBot) {
+    return 0;
+  }
+  return vel;
 }
 
 function draw() {
   background(220);
   obstacles.forEach((obstacle) => obstacle.draw());
   player.draw();
-
-  //   player.moveY(10);
-  //   if (player.onGround() || isMarioCollidingWithAnyObject()) {
-  //     player.moveY(-10);
-  //   }
+  player.move();
 }
-
-// how to react to keyboard events
-
-// how to stop the loop
