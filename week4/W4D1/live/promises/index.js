@@ -3,9 +3,9 @@
 // rejected -> rejected
 
 // example of creating a promise that resolves after 1 second with the value hello
-const promise = new Promise((resolve, reject) => {
+const promise = new Promise((res) => {
   setTimeout(() => {
-    resolve("Hello");
+    res("Hello");
   }, 1000);
 });
 
