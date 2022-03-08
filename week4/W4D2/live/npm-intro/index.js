@@ -1,3 +1,4 @@
+// first have to npm i express in your directory for this to work!
 const express = require("express");
 const app = express();
 
