@@ -1,0 +1,52 @@
+<h1>{{title}}</h1>
+{{> image headline="Something" altText="an image on the home page" imageSrc="images/baby-turtle.png"}}
+{{> image headline="Something" altText="some other image" imageSrc="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"}}
+
+<h1>#if</h1>
+{{#if text}}
+  <h2>We have text :) </h2>
+  <p>{{text}}</p>
+{{/if}}
+
+{{#if text}}
+{{else}}
+  <h1>#else</h1>
+  <h2>Sorry no text :(</h2>
+{{/if}}
+
+{{#unless city}}
+  <h1>#unless</h1>
+  <h2>Sorry no city defined!</h2>
+{{/unless}}
+
+<h1>#with</h1>
+{{#with movie}}
+  <h1>Our Movie: {{name}}</h1>
+  <h2>Genre: {{genre}}</h2>
+  {{#with director}}
+    <p>{{name}} is {{text}}</p>
+    <p>{{../text}}</p>
+    <p>{{../../text}}</p>
+  {{/with}}
+{{/with}}
+
+<h1>{{movie.director.name}}</h1>
+
+<h1>#each</h1>
+<ul>
+  {{#each todos}}
+    <li>{{@index}} {{this}}</li>
+  {{/each}}
+</ul>
+
+<h1>lookup</h1>
+{{#each people}}
+  <p>{{this}} lives in {{lookup ../cities @index}}</p>
+{{/each}}
+
+<h1>Custom Helper</h1>
+<h1>Rick says: {{upper "wabalabadubdub"}}</h1>
+
+{{htmlCode}}
+
+{{{htmlCode}}}
