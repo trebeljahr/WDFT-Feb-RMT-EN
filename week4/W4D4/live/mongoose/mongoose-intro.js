@@ -33,6 +33,11 @@ for (let i = 0; i < 7; i++) {
   generationsEnum.push(i + 1);
 }
 
+// more stuff you could do with function factories/currying/higher order functions
+const removeDecimals = (value) => Math.floor(value);
+// currying -> is the name for that pattern/idea
+const roundToDigitFactory = (len) => (value) => Number(value.toFixed(len));
+
 const pokemonSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -40,6 +45,7 @@ const pokemonSchema = new mongoose.Schema({
     unique: true,
   },
   hp: {
+    set: roundToDigitFactory(2),
     type: Number,
     required: true,
     min: 0,
@@ -57,6 +63,7 @@ const pokemonSchema = new mongoose.Schema({
   moves: {
     type: [String],
     required: true,
+
     set: stringArrayPaddingFactory(4),
     validate: {
       validator: (movesArray) => {
