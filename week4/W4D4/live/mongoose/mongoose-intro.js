@@ -17,7 +17,6 @@ function completePokeTypes(pokeTypes) {
   }
   if (pokeTypes.length < 2) {
     const paddedPokeTypes = padPokeTypesToLength(pokeTypes, 2);
-    console.log(paddedPokeTypes);
     return paddedPokeTypes;
   }
   return pokeTypes;
@@ -27,7 +26,9 @@ const generationsEnum = [];
 for (let i = 0; i < 7; i++) {
   generationsEnum.push(i + 1);
 }
-
+const typeValidator = (movesArray) => {
+  return movesArray.length === 2;
+};
 const pokemonSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -64,9 +65,7 @@ const pokemonSchema = new mongoose.Schema({
     type: [String],
     set: completePokeTypes,
     validate: {
-      validator: (movesArray) => {
-        return movesArray.length === 2;
-      },
+      validator: typeValidator,
       message: "Pokemons should have exactly 2 types",
     },
   },
@@ -93,6 +92,15 @@ async function main() {
 
   await pikachu.save();
 
+  const raichu = new Pokemon({
+    name: "Raichu",
+    hp: 60,
+    moves: ["Thunderbolt", "", "", ""],
+    pokeTypes: ["Electro"],
+  });
+
+  await raichu.save();
+
   //   const pikachu2 = new Pokemon({
   //     name: "Pikachu",
   //     hp: 50,
@@ -115,6 +123,84 @@ async function main() {
   });
   await bulbasaur.save();
 
+  const [pikachuFromDB] = await Pokemon.find({ name: "Pikachu" });
+  console.log(pikachuFromDB.name);
+
+  const all = await Pokemon.find();
+  console.log(all);
+
+  const pikachuAndRaichu = await Pokemon.find({
+    name: { $in: ["Pikachu", "Raichu"] },
+  });
+  console.log(pikachuAndRaichu);
+
+  const onlyPikachu = await Pokemon.findOne({
+    name: { $in: ["Pikachu", "Raichu"] },
+  });
+  console.log(onlyPikachu);
+
+  const noPokemon = await Pokemon.find({ name: "Ditto" });
+  console.log(noPokemon);
+
+  // console.clear();
+
+  // const ourId = "6229fa79fc793a1204843213";
+  // console.log(onlyPikachu._id);
+  const foundById = await Pokemon.findById(onlyPikachu._id);
+  console.log(foundById);
+
+  const totalNumber = await Pokemon.countDocuments();
+  console.log(totalNumber);
+
+  const hpOver50 = await Pokemon.countDocuments({
+    hp: { $gt: 50 },
+  });
+
+  console.log(hpOver50);
+
+  const typeOnlyElectro = await Pokemon.find({
+    pokeTypes: { $all: ["Electro", ""] },
+  });
+  console.log(typeOnlyElectro);
+
+  await Pokemon.updateOne({ name: "Pikachu" }, { hp: 300 });
+  const newTypes = ["Electricity", "Thunder"];
+  if (typeValidator(newTypes)) {
+    await Pokemon.updateMany(
+      { pokeTypes: { $all: ["Electro", ""] } },
+      { pokeTypes: newTypes }
+    );
+  } else {
+    console.log("You're trying to use the wrong data for types!");
+  }
+
+  const beforeUpdate = await Pokemon.findOneAndUpdate(
+    { name: "Pikachu" },
+    { name: "Pikachu2" }
+  );
+  console.log(beforeUpdate);
+  const afterUpdate = await Pokemon.findById(beforeUpdate._id);
+  console.log(afterUpdate);
+
+  async function replaceNameOfPokemon(old, update) {
+    return await Pokemon.findOneAndUpdate(
+      { name: old },
+      { name: update },
+      {
+        returnDocument: "after",
+      }
+    );
+  }
+
+  const afterUpdate2 = await replaceNameOfPokemon("Pikachu2", "Raichu123");
+  console.log(afterUpdate2);
+
+  await Pokemon.deleteOne({ name: "Bulbasaur" });
+  // await Pokemon.deleteMany({
+  //   pokeTypes: { $all: ["Electricity", "Thunder"] },
+  // });
+  // cleans everything in the collection of pokemons
+  // await Pokemon.deleteMany();
   await mongoose.connection.close();
 }
 
