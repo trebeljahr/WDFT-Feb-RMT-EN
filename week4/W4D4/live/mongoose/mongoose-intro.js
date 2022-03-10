@@ -164,15 +164,12 @@ async function main() {
   console.log(typeOnlyElectro);
 
   await Pokemon.updateOne({ name: "Pikachu" }, { hp: 300 });
-  const newTypes = ["Electricity", "Thunder"];
-  if (typeValidator(newTypes)) {
-    await Pokemon.updateMany(
-      { pokeTypes: { $all: ["Electro", ""] } },
-      { pokeTypes: newTypes }
-    );
-  } else {
-    console.log("You're trying to use the wrong data for types!");
-  }
+  const newTypes = ["Electricity", "Thunder", "A third type"];
+  await Pokemon.updateMany(
+    { pokeTypes: { $all: ["Electro", ""] } },
+    { pokeTypes: newTypes },
+    { runValidators: true }
+  );
 
   const beforeUpdate = await Pokemon.findOneAndUpdate(
     { name: "Pikachu" },
