@@ -4,24 +4,29 @@ const mongoose = require("mongoose");
 const ourModule = require("./our-own-module");
 console.log(ourModule);
 
-function padPokeTypesToLength(pokeTypes, length) {
-  for (let i = pokeTypes.length; i < length; i++) {
-    pokeTypes.push("");
+function padStringArrayToLength(strArray, length) {
+  for (let i = strArray.length; i < length; i++) {
+    strArray.push(defaultPadding);
   }
-  return pokeTypes;
+  return strArray;
 }
 
-function completePokeTypes(pokeTypes) {
-  if (pokeTypes.length === 2) {
-    return pokeTypes;
+function stringArrayPaddingFactory(length) {
+  function completeStrArray(strArray) {
+    if (strArray.length === length) {
+      return strArray;
+    }
+    if (strArray.length < length) {
+      const paddedstrArray = padStringArrayToLength(strArray, length);
+      console.log(paddedstrArray);
+      return paddedstrArray;
+    }
+    return strArray;
   }
-  if (pokeTypes.length < 2) {
-    const paddedPokeTypes = padPokeTypesToLength(pokeTypes, 2);
-    console.log(paddedPokeTypes);
-    return paddedPokeTypes;
-  }
-  return pokeTypes;
+  return completeStrArray;
 }
+
+const padToLength2 = stringArrayPaddingFactory(2);
 
 const generationsEnum = [];
 for (let i = 0; i < 7; i++) {
@@ -52,17 +57,18 @@ const pokemonSchema = new mongoose.Schema({
   moves: {
     type: [String],
     required: true,
+    set: stringArrayPaddingFactory(4),
     validate: {
       validator: (movesArray) => {
         return movesArray.length === 4;
       },
       message: "Pokemons should have 4 moves",
     },
-    default: ["", "", "", ""],
+    default: [],
   },
   pokeTypes: {
     type: [String],
-    set: completePokeTypes,
+    set: padToLength2,
     validate: {
       validator: (movesArray) => {
         return movesArray.length === 2;
@@ -87,7 +93,7 @@ async function main() {
   const pikachu = new Pokemon({
     name: "Pikachu",
     hp: 30,
-    moves: ["Thunderbolt", "", "", ""],
+    moves: ["Thunderbolt"],
     pokeTypes: ["Electro"],
   });
 
