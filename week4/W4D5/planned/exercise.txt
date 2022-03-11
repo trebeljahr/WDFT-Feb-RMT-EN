@@ -1,0 +1,10 @@
+1. Create/Copy a Simple Express Server with HBS setup. 
+2. Add a form to one of your .hbs files.
+3. Add a number type input and a submit button.
+4. Make the form submit data to a URL on your server. 
+6. Don't forget to set the method and enctype!
+7. Create a route on the server that handles the form url.  
+8. Don't forget to use the express.json, express.enctype middleware 
+9. console.log the req.query from your server.
+10. Send a response to the user with the number the user chose and 100 added to it. 
+
