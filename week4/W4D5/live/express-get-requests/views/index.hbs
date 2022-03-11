@@ -1,33 +1,26 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="css/index.css">
-  </head>
-  <body>
-    <h1>Hello World</h1>
-    <form class="flex" action="/find-by-name" method="get" enctype="application/json"
+<h1>Hello World</h1>
+<form
+  class="flex"
+  action="/find-by-name"
+  method="get"
+  enctype="application/json"
 >
-      <label for="character-name">Character:</label>
-      <input
-        id="character-name"
-        name="character"
-        type="text"
-        value=""
-        placeholder="Name of a Character"
-      />
+  <label for="character-name">Character:</label>
+  <input
+    id="character-name"
+    name="character"
+    type="text"
+    value=""
+    placeholder="Name of a Character"
+  />
 
-      <label for="episode">Episode:</label>
-      <input
-        id="episode"
-        name="episode"
-        type="number"
-        value=""
-        placeholder="Episode Number"
-      />
-      <button type="submit">Send!</button>
-    </form>
-  </body>
-</html>
+  <label for="episode">Episode:</label>
+  <input
+    id="episode"
+    name="episode"
+    type="number"
+    value=""
+    placeholder="Episode Number"
+  />
+  <button type="submit">Send!</button>
+</form>

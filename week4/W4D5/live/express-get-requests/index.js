@@ -37,6 +37,29 @@ server.get("/find-by-name", async (req, res) => {
   }
 });
 
+// localhost:3000/character/hello/10/berlin
+server.get("/example/:message/:id/:city", (req, res) => {
+  console.log(req.params);
+  const parameters = Object.entries(req.params)
+    .map((elem) => elem.join(":"))
+    .join(", ");
+  console.log(parameters);
+  // "id: 5, hello: 10"
+  res.send("Your parameters in the url are: " + parameters);
+
+  // alternatively we could do
+  // res.send("Your parameters in the url are: " + JSON.stringify(req.params));
+});
+
+server.get("/city/:cityName", (req, res) => {
+  const { cityName } = req.params;
+
+  const imageUrl = `/images/${cityName}.jpg`;
+  console.log(imageUrl);
+
+  res.render("city", { cityName, imageUrl });
+});
+
 server.get("/", (req, res) => {
   res.render("index", { pageTitle: "Home" });
 });

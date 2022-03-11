@@ -6,6 +6,14 @@
     /* align-items: center; */
 }
 
+/* body {
+    background: blue;
+} */
+
 .flex > * {
     margin-bottom: 10px;
+}
+
+.img {
+    width: 30vw;
 }

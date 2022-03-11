@@ -1,0 +1,28 @@
+<h1>Hello World</h1>
+<form class="flex" action="/post-example" method="post">
+  <label for="characterName">Character Name:</label>
+  <input
+    id="characterName"
+    name="characterName"
+    type="text"
+    placeholder="Enter name here!"
+  />
+  <label for="episode">Episode:</label>
+  <input
+    id="episode"
+    name="episode"
+    type="number"
+    placeholder="Enter name here!"
+  />
+  <button type="submit">Submit!</button>
+</form>
+
+<form
+  class="flex"
+  action="/image-upload"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <input type="file" name="image" accept="image/png, image/jpeg, image/jpg" />
+  <button type="submit">Submit!</button>
+</form>
