@@ -1,0 +1,21 @@
+<h1>Single Book: </h1>
+
+<div id="bookDetails">
+{{#with bookDetails}}
+    {{> bookInfo }}
+    <p>{{description}}</p>
+{{/with}}
+</div>
+
+
+<form id="bookEditForm" class="hidden" action="/books/{{bookDetails._id}}/edit" method="POST">
+    <input name="title" value="{{bookDetails.title}}" type="text"/>
+    <input name="author" value="{{bookDetails.author}}" type="text" />
+    <input name="description" value="{{bookDetails.description}}" type="text">
+    <input name="rating" value="{{bookDetails.rating}}" type="number"/>
+    <button type="submit">Submit!</button>
+</form>
+
+<button id="book-edit-button">Edit!</button>
+<button id="book-delete-button">Delete!</button>
+<script src="/js/editBook.js" />
