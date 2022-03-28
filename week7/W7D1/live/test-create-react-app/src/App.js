@@ -7,6 +7,7 @@ import { FirstComponent, SecondComponent } from "./components/Component";
 import Pizza from "./components/Component";
 import { Greeting } from "./components/Greeting";
 import { DestructuredProps } from "./components/DestructuredProps";
+import { Pokemon } from "./components/Pokemon";
 // import { FirstComponent } from './Component';
 
 function App() {
@@ -17,8 +18,18 @@ function App() {
         <Greeting name="Joshua" message="Howdy" color="yellow" />
         <Greeting name="Julie" message="Something French :)" />
         <DestructuredProps currentName="Rico" backgroundColor="black" />
+        <Pokemon
+          pokemonName="Charmander"
+          type="electro"
+          moves={["thunderbolt", "paralysis"]}
+        >
+          <div>
+            <h1>Hello there from "inside" Pokemon component</h1>
+          </div>
+          <h2>Second Child</h2>
+          <FirstComponent />
+        </Pokemon>
 
-        <FirstComponent />
         <SecondComponent />
         <Pizza />
         <img
