@@ -3,17 +3,21 @@
 
 import mountain from "./mountain.jpg";
 import "./App.css";
-import { FirstComponent, SecondComponent } from "./Component";
-import Pizza from "./Component";
+import { FirstComponent, SecondComponent } from "./components/Component";
+import Pizza from "./components/Component";
+import { Greeting } from "./components/Greeting";
+import { DestructuredProps } from "./components/DestructuredProps";
 // import { FirstComponent } from './Component';
+
 function App() {
-  const name = "Joshua";
   return (
     <div className="App">
       <header className="App-header">
-        <h1 style={{ textDecoration: "underline" }} className="greeting">
-          Hello there {name}!
-        </h1>
+        <Greeting name="Vinayak" message="Hello" color="rgb(100, 20, 30)" />
+        <Greeting name="Joshua" message="Howdy" color="yellow" />
+        <Greeting name="Julie" message="Something French :)" />
+        <DestructuredProps currentName="Rico" backgroundColor="black" />
+
         <FirstComponent />
         <SecondComponent />
         <Pizza />
