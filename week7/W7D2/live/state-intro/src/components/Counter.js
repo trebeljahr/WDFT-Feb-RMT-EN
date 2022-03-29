@@ -24,7 +24,9 @@ export function Counter({ defaultValue = 0, increment = 1 }) {
 
   return (
     <div>
-      <h1>Counter: {number}</h1>
+      <h1 className={number >= defaultValue ? "on" : "off"}>
+        Counter: {number}
+      </h1>
       <button onClick={incrementNumber}>+{increment}</button>
       <button onClick={decrementNumber}>-{increment}</button>
       <button onClick={reset}>Reset</button>
