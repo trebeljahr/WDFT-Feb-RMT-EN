@@ -48,12 +48,12 @@ export function HarryPotterCharacters() {
       <h1>A new list:</h1>
       <button onClick={addCharacter}>Add a random character!</button>
       {characters.map((character) => (
-        <>
+        <div key={character.id}>
           <CharacterComponent singleCharacter={character} />
           <button onClick={() => deleteCharacter(character)}>
             Delete this character!
           </button>
-        </>
+        </div>
       ))}
     </div>
   );
