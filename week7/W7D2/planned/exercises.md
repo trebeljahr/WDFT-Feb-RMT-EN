@@ -2,11 +2,11 @@
 
 ## State:
 1. Create a create-react-app using npx.
-1. Make a simple component and use it in your app.
-1. Give it a state variable named "counter". Use the useState hook we saw in class.
-1. Display that state variable in the text of a React component. 
-1. Create an increase counter button in the component and wire it up so that if we click the button the counter increases!
-1. Also create a decrease counter button that decreases the count.
+2. Make a simple component and use it in your app.
+3. Give it a state variable named "counter". Use the useState hook we saw in class.
+4. Display that state variable in the text of a React component. 
+5. Create an increase counter button in the component and wire it up so that if we click the button the counter increases!
+6. Bonus: Create a decrease counter button that decreases the count.
 
 ## Conditionals:
 1. Create a create-react-app using npx.
