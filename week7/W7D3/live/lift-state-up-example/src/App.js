@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { AllTheCounters } from "./components/AllTheCounters";
+import { AllTheCountersButAsObjects } from "./components/AllTheCountersButAsObjects";
 import { ConditionalRendering } from "./components/ConditionalRendering";
 import { Counter } from "./components/Counter";
 import { LiftedUpState2 } from "./components/LiftedUpState-way2";
@@ -13,8 +14,8 @@ function App() {
       {/* <LiftedUpState2>
         <div>This is a child of the LiftedUpState</div>
       </LiftedUpState2> */}
-
-      <AllTheCounters />
+      <AllTheCountersButAsObjects />
+      {/* <AllTheCounters /> */}
       {/* <ConditionalRendering />
 
       <Counter increment={5} />

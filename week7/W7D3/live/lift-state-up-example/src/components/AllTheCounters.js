@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { Counter } from "./Counter";
-
-function createSingleCounterState(start, increment) {
-  return {
-    start,
-    currentNumber: start,
-    increment,
-  };
-}
+import { createSingleCounterState } from "./utils/createSingleCounterState";
 
 const initialCounters = [
   createSingleCounterState(1, 5),
