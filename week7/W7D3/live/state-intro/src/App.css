@@ -1,0 +1,13 @@
+.on {
+  background: green;
+}
+.off {
+  background: red;
+}
+
+h1 {
+  transition: color 1s;
+}
+.on, .off {
+  transition: background 1s;
+}
