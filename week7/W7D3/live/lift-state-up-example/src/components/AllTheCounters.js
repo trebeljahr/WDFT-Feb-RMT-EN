@@ -53,8 +53,23 @@ export function AllTheCounters() {
   //   const updateFunction = updateSingleCounterFactory(1);
   //   updateFunction(10000);
 
+  const addCounter = () => {
+    setStates((oldValues) => [...oldValues, createSingleCounterState(0, 1000)]);
+  };
+
+  const computesTotal = () => {
+    alert(
+      "Here is the total:" +
+        states.reduce((agg, state) => {
+          return agg + state.currentNumber;
+        }, 0)
+    );
+  };
+
   return (
     <div>
+      <button onClick={computesTotal}>Compute Total of All counters!</button>
+      <button onClick={addCounter}>Add counter!</button>
       <button onClick={incrementAll}>Increment All!</button>
       <button onClick={decrementAll}>Decrement All!</button>
 
