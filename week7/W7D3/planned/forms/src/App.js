@@ -96,7 +96,7 @@ function Character({ character, changeCharacter }) {
 
 function App() {
   const [characters, setCharacters] = useState(defaultCharacters);
-
+  const [filter, setFilter] = useState("");
   const changeCharacter = (index) => (update) => {
     const updatedCharacters = characters.map((character, current) => {
       if (index === current) {
@@ -107,18 +107,30 @@ function App() {
     setCharacters(updatedCharacters);
   };
 
+  const handleFilterInput = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const toCharacterComponent = (character, index) => {
+    return (
+      <Character
+        key={character.name}
+        character={character}
+        changeCharacter={changeCharacter(index)}
+      />
+    );
+  };
   return (
     <div className="App">
+      <input value={filter} onChange={handleFilterInput}></input>
       <div className="harry-potter-characters">
-        {characters.map((character, index) => {
-          return (
-            <Character
-              key={character.name}
-              character={character}
-              changeCharacter={changeCharacter(index)}
-            />
-          );
-        })}
+        {filter === ""
+          ? characters.map(toCharacterComponent)
+          : characters
+              .filter((character) =>
+                character.name.toLowerCase().includes(filter.toLowerCase())
+              )
+              .map(toCharacterComponent)}
       </div>
     </div>
   );

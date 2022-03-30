@@ -20,8 +20,8 @@
     isDone: false 
 }
 ```
-5. Create a component to display a single todo - it should show the message. 
-6. Adapt the component - to use conditional rendering to set `"text-decoration": "line-through"` if the todo is done. 
+5. Create a component to display a single todo - it should show the message of that todo. 
+6. Adapt the component to use conditional rendering to set `"text-decoration": "line-through"` if the todo is done. 
 6. Add a button to each todo that can change the state of that single todo to `true`. 
 7. Finally: Add a button that when clicked alerts to the user how many todos are still remaining to be done. Hint: You can filter over the todos from your state and get the length of only the ones where `isDone === false`
 8. Bonus: Add buttons to add new todos. 
