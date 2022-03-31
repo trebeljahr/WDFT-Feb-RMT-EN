@@ -1,8 +1,7 @@
 import "./App.css";
 import { Clock } from "./components/Clock";
-import { SimpleUseEffect } from "./components/SimpleUseEffect";
-import { ThreeStates } from "./components/ThreeStates";
 import { useState } from "react";
+import { Counter } from "./components/Counter";
 
 function App() {
   const [showClock, setShowClock] = useState(false);
@@ -12,7 +11,14 @@ function App() {
       <button onClick={() => setShowClock(!showClock)}>
         {showClock ? "Hide" : "Show"} clock
       </button>
+
       {showClock && <Clock />}
+      {Array.from(Array(100))
+        .map((_, i) => i + 1)
+        .map((num) => (
+          <Counter timeForTickInSeconds={num} />
+        ))}
+
       {/* <ThreeStates />
       <SimpleUseEffect /> */}
     </div>
