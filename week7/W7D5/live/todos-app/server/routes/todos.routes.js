@@ -14,16 +14,25 @@ router.delete("/todos/delete", async (req, res, next) => {
 });
 
 router.post("/todos/update", async (req, res, next) => {
-  console.log(req.body);
-  const { name, done } = req.body;
-  await Todo.updateOne(
-    { _id: req.body._id },
-    { name, done },
-    {
-      upsert: true,
+  try {
+    console.log(req.body);
+    const { name, done, _id } = req.body;
+    if (!_id) {
+      throw Error("Wrong id!");
     }
-  );
-  return res.json({ message: "Update success" });
+    await Todo.updateOne(
+      { _id },
+      { name, done },
+      {
+        upsert: true,
+      }
+    );
+    return res.json({ message: "Update success" });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ errorMessage: "Server error: please try again" });
+  }
 });
 
 router.post("/todos/create", async (req, res, next) => {
