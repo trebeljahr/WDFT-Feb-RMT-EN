@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const base = "https://pokeapi.co/api/v2/pokemon";
 export function SinglePokemon() {
@@ -30,6 +30,8 @@ export function SinglePokemon() {
   );
 }
 export function PokemonList() {
+  const location = useLocation();
+  console.log("Location:", location);
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export function PokemonList() {
       <h1>Pokemon</h1>
       {pokemons.map(({ name }) => {
         return (
-          <div>
+          <div key={name}>
             <h1>
               <Link to={name}> {name}</Link>
             </h1>
