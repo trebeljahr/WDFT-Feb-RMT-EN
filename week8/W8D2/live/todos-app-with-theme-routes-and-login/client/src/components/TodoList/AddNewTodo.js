@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import { API_BASE_URL } from "../consts";
+import { API_BASE_URL } from "../../consts";
 
 export function AddNewTodo({ setAllTodos }) {
   const [newTodo, setNewTodo] = useState({ name: "", done: false });
@@ -14,17 +15,10 @@ export function AddNewTodo({ setAllTodos }) {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/todos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTodo),
-      });
-      const serverResponse = await response.json();
-      console.log(serverResponse);
+      const { data } = await axios.post(`${API_BASE_URL}/todos`, newTodo);
+      console.log(data);
       setAllTodos((oldTodos) => {
-        return [...oldTodos, serverResponse.todo];
+        return [...oldTodos, data.todo];
       });
     } catch (error) {
       console.error("Error in updating the todo list on the server!", error);

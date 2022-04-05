@@ -1,8 +1,10 @@
 const router = require("express").Router();
+const csrfMiddleware = require("../middlewares/csrfMiddleware");
+const isLoggedIn = require("../middlewares/isLoggedIn");
 const Todo = require("../models/Todos.model");
 
 // CRUD - app
-router.get("/todos", async (req, res, next) => {
+router.get("/todos", csrfMiddleware, isLoggedIn, async (req, res, next) => {
   try {
     const todos = await Todo.find();
     res.json({ todos });
@@ -16,7 +18,7 @@ router.get("/todos", async (req, res, next) => {
   //   res.status(403).json({ errorMessage: "Denied Access!" });
 });
 
-router.put("/todos", async (req, res, next) => {
+router.put("/todos", csrfMiddleware, isLoggedIn, async (req, res, next) => {
   try {
     const { _id, name, done } = req.body;
     if (!_id) {
@@ -40,7 +42,7 @@ router.put("/todos", async (req, res, next) => {
   }
 });
 
-router.delete("/todos", async (req, res, next) => {
+router.delete("/todos", csrfMiddleware, isLoggedIn, async (req, res, next) => {
   try {
     const { id } = req.body;
     await Todo.findByIdAndDelete(id);
@@ -52,7 +54,7 @@ router.delete("/todos", async (req, res, next) => {
   }
 });
 
-router.post("/todos", async (req, res, next) => {
+router.post("/todos", csrfMiddleware, isLoggedIn, async (req, res, next) => {
   try {
     const { name, done } = req.body;
     console.log("Should create a new todo with", name, done);

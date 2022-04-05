@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  min-height: 100vh;
+}
+
+/* .dark > * {
+  background: black;
+  color: white;
+}
+
+.bright > * {
+  background: white;
+  color: black;
+} */
+
+.navbar {
+  width: 100%;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar > a {
+  margin: 10px;
+}
+
+.dark-nav { 
+  background: black;
+}
+
+.dark-nav > a {
+  color: white;
+}
+
+.bright-nav {
+  color: black; 
+  background: lightblue;
+}
